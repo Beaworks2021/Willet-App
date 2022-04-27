@@ -138,13 +138,13 @@ const CourierType = () => {
               )}
             />
 
-            <View
-              style={{
+            {/* <View */}
+            {/* style={{
                 flex: 0.5,
                 alignItems: "center",
               }}
-            >
-              {/* <TouchableOpacity
+            > */}
+            {/* <TouchableOpacity
                 disabled={!selected}
                 style={
                   selected
@@ -178,7 +178,7 @@ const CourierType = () => {
                   Proceed With {selected?.title}
                 </Text>
               </TouchableOpacity> */}
-            </View>
+            {/* </View> */}
           </View>
         </View>
       </View>

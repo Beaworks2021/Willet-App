@@ -34,18 +34,18 @@ const MapPriceScreen = () => {
           <View style={{ flex: 100 }}>
             <TouchableOpacity
               onPress={() => navigate("HomeDetails")}
-              style={tw`absolute rounded-full shadow-lg left-8 z-50 p-3 top-10 bg-gray-100`}
+              style={tw`absolute rounded-full shadow-lg right-10 z-40 p-3 bottom-40 bg-gray-100`}
             >
               <Ionicons name="arrow-back" size={24} color="black" />
             </TouchableOpacity>
-            <View style={{ flex: 50 }}>
-              <Map />
-            </View>
-            <View style={{ flex: 50 }}>
+            <View style={{ flex: 40 }}>
               <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="NavigateCard" component={NavigateCard} />
                 <Stack.Screen name="CourierType" component={CourierType} />
               </Stack.Navigator>
+            </View>
+            <View style={{ flex: 60 }}>
+              <Map />
             </View>
           </View>
         </View>
