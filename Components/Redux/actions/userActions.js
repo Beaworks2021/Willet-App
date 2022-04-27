@@ -43,7 +43,7 @@ export const syncPackageData = ({}) => {
 
 export const getUserData = () => {
   return (dispatch, useState, { getFirebase, getFirestore }) => {
-    const userId = getFirebase.auth().currentUser.uid;
+    const userId = getFirebase().auth().currentUser.uid;
     const db = getFirestore();
     const dbRef = db.collection("users").doc(userId);
 
