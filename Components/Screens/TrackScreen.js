@@ -1,14 +1,22 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
 
 const TrackScreen = () => {
-  const {userData} = useSelector((state) => state.userReducers)
+  const { userData } = useSelector((state) => state.userReducers);
 
   console.log(userData);
   return (
     <View>
-      <Text>TrackScreen</Text>
+      {userData?.packages.length === 0 ? (
+        <Text>No Package</Text>
+      ) : (
+        <FlatList
+          data={userData?.packages}
+          keyExtractor={(item, index) => `package-${index}`}
+          renderItem={({ item }) => {}}
+        />
+      )}
     </View>
   );
 };
