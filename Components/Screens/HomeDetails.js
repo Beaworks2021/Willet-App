@@ -12,15 +12,24 @@ import React, { useEffect, useRef, useState } from "react";
 import NavOptions from "./navOptions";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { useDispatch, useSelector } from "react-redux";
-import { setDestination, setOrigin } from "../Redux/actions/userActions";
+import {
+  getUserData,
+  setDestination,
+  setOrigin,
+} from "../Redux/actions/userActions";
 
 const HomeDetails = ({ navigation }) => {
   const dispatch = useDispatch();
   const origin = useSelector((state) => state.userReducers.origin);
   const inputRef = useRef(null);
-
   const [isFocused, setIsFocused] = useState(false);
 
+  useEffect(() => {
+    const getAllUserData = dispatch(getUserData());
+    return () => getAllUserData;
+  }, []);
+
+  // animation
   const moveInput = useRef(
     new Animated.Value(Dimensions.get("window").height - 350)
   ).current;
