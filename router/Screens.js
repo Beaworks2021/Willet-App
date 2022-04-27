@@ -28,7 +28,7 @@ const Screens = () => {
 
   return (
     <NavigationContainer>
-      {false ? (
+      {!currentUser ? (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="InitialScreen" component={InitialScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
