@@ -1,17 +1,47 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import MapViewDirections from "react-native-maps-directions";
 import { setTravelTimeInformation } from "../Redux/actions/userActions";
+import * as Location from "expo-location";
+
+
 // import { selectOrigin } from "../../slices/navSlice";
 
 const Map = () => {
   //   const origin = useSelector(selectOrigin);
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
   const origin = useSelector((state) => state.userReducers.origin);
   const destination = useSelector((state) => state.userReducers.destination);
   const mapRef = useRef(null);
   const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let text = "Waiting..";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
+  console.log(text);
+
 
   useEffect(() => {
     if (!origin || !destination) return;
