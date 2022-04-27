@@ -42,7 +42,7 @@ const PackageConfirm = () => {
         method: "get",
         url: `https://api.flutterwave.com/v3/transactions/${data.transaction_id}/verify`,
         headers: {
-          Authorization: "FLWSECK_TEST-47131ada4da99bdab2f40199eaa86cb9-X",
+          Authorization: "FLWPUBK_TEST-b4c8610ef2e104ed877166c2a55f51f5-X",
         },
       })
         .then((res) => {
