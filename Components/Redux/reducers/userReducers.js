@@ -1,5 +1,5 @@
 const initialState = {
-  userData: [],
+  userData: null,
   origin: null,
   destination: null,
   travelTimeInformation: null,
@@ -13,6 +13,8 @@ const userReducers = (state = initialState, { type, payload }) => {
       return { ...state, destination: payload };
     case "SET_TRAVELTIMEINFORMATION":
       return { ...state, travelTimeInformation: payload };
+    case "GET_USER_DATA":
+      return { ...state, userData: payload };
     default:
       return state;
   }
