@@ -4,9 +4,6 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { useDispatch, useSelector } from "react-redux";
 import { setDestination, setOrigin } from "../Redux/actions/userActions";
 import { useNavigation } from "@react-navigation/native";
-import CourierType from "./CourierType";
-import NavFavs from "./NavFavs";
-import { TouchableOpacity } from "react-native";
 
 const NavigateCard = () => {
   const dispatch = useDispatch();
