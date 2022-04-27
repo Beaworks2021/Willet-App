@@ -21,7 +21,7 @@ export const setTravelTimeInformation = (state) => {
 };
 
 export const syncPackageData = ({}) => {
-  return (dispatch, useState, { getFirestore, getFirebase }) => {
+  return (dispatch, useState, { getFirebase, getFirestore }) => {
     const userId = getFirebase().auth().currentUser.uid;
     const db = getFirestore();
     const dbRef = db.collection("users").doc(userId);
@@ -42,8 +42,8 @@ export const syncPackageData = ({}) => {
 };
 
 export const getUserData = () => {
-  return (dispatch, useState, { getFirestore, getFirebase }) => {
-    const userId = getFirebase().auth().currentUser.uid;
+  return (dispatch, useState, { getFirebase, getFirestore }) => {
+    const userId = getFirebase.auth().currentUser.uid;
     const db = getFirestore();
     const dbRef = db.collection("users").doc(userId);
 
