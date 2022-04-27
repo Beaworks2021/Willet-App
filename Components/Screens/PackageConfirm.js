@@ -1,9 +1,17 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 import { useRoute } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import PayWithFlutterwave from "flutterwave-react-native";
 import { syncPackageData } from "../Redux/actions/userActions";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const PackageConfirm = () => {
   const [redirectData, setRedirectData] = useState(null);
@@ -27,9 +35,9 @@ const PackageConfirm = () => {
     tx_ref: `MC-${Date.now()}`,
     authorization: "FLWPUBK_TEST-b4c8610ef2e104ed877166c2a55f51f5-X",
     customer: {
-      email: userData?.email,
+      email: "ekowworks@gmail.com",
     },
-    amount: courier?.PRICE,
+    amount: +courier?.PRICE,
     currency: "GHS",
     payment_options: "card",
   };
@@ -97,8 +105,6 @@ const PackageConfirm = () => {
       navigate("TrackScreen");
     }
   }, [verified]);
-
-
 
   return (
     <ScrollView>
@@ -248,7 +254,7 @@ const PackageConfirm = () => {
         </View>
       </View>
 
-      <View style={{}}>
+      <View style={{ alignItems: "center", marginTop: 40 }}>
         <PayWithFlutterwave
           onRedirect={(data) => handleOnRedirect(data)}
           options={paymentOptions}
@@ -256,10 +262,11 @@ const PackageConfirm = () => {
             <TouchableOpacity
               style={{
                 backgroundColor: "black",
-                height: 50,
+                height: 70,
                 justifyContent: "center",
                 alignItems: "center",
-                borderRadius: 5,
+                borderRadius: 35,
+                width: 350,
               }}
               onPress={props.onPress}
               isBusy={props.isInitializing}

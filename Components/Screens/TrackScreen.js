@@ -8,7 +8,7 @@ const TrackScreen = () => {
   console.log(userData);
   return (
     <View>
-      {!userData?.packages === 0 ? (
+      {!userData?.packages ? (
         <Text>No Package</Text>
       ) : (
         <FlatList
