@@ -34,7 +34,7 @@ const MapPriceScreen = () => {
           <View style={{ flex: 100 }}>
             <TouchableOpacity
               onPress={() => navigate("HomeDetails")}
-              style={tw`absolute rounded-full shadow-lg right-10 z-40 p-3 bottom-40 bg-gray-100`}
+              style={tw`absolute rounded-full shadow-lg left-7 z-40 p-3 top-4 bg-gray-100`}
             >
               <Ionicons name="arrow-back" size={24} color="black" />
             </TouchableOpacity>

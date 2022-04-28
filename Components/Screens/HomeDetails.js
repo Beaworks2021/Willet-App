@@ -30,52 +30,52 @@ const HomeDetails = ({ navigation }) => {
   }, []);
 
   // animation
-  const moveInput = useRef(
-    new Animated.Value(Dimensions.get("window").height - 350)
-  ).current;
-  const changeBgColor = useRef(new Animated.Value(0)).current;
+  // const moveInput = useRef(
+  //   new Animated.Value(Dimensions.get("window").height - 350)
+  // ).current;
+  // const changeBgColor = useRef(new Animated.Value(0)).current;
 
-  useEffect(() => {
-    if (isFocused) {
-      Animated.sequence([
-        Animated.timing(moveInput, {
-          toValue: 50,
-          easing: Easing.inOut(Easing.ease),
-          duration: 800,
-          useNativeDriver: true,
-        }),
-        Animated.timing(changeBgColor, {
-          toValue: 1,
-          duration: 500,
-          easing: Easing.inOut(Easing.ease),
-          useNativeDriver: true,
-        }),
-      ]).start();
-    } else {
-      Animated.sequence([
-        Animated.timing(moveInput, {
-          toValue: Dimensions.get("window").height - 350,
-          easing: Easing.inOut(Easing.ease),
-          duration: 800,
-          useNativeDriver: true,
-        }),
-        Animated.timing(changeBgColor, {
-          toValue: 0,
-          duration: 500,
-          easing: Easing.inOut(Easing.ease),
-          useNativeDriver: true,
-        }),
-      ]).start();
-    }
-  }, [isFocused]);
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     Animated.sequence([
+  //       Animated.timing(moveInput, {
+  //         toValue: 50,
+  //         easing: Easing.inOut(Easing.ease),
+  //         duration: 800,
+  //         useNativeDriver: true,
+  //       }),
+  //       Animated.timing(changeBgColor, {
+  //         toValue: 1,
+  //         duration: 500,
+  //         easing: Easing.inOut(Easing.ease),
+  //         useNativeDriver: true,
+  //       }),
+  //     ]).start();
+  //   } else {
+  //     Animated.sequence([
+  //       Animated.timing(moveInput, {
+  //         toValue: Dimensions.get("window").height - 350,
+  //         easing: Easing.inOut(Easing.ease),
+  //         duration: 800,
+  //         useNativeDriver: true,
+  //       }),
+  //       Animated.timing(changeBgColor, {
+  //         toValue: 0,
+  //         duration: 500,
+  //         easing: Easing.inOut(Easing.ease),
+  //         useNativeDriver: true,
+  //       }),
+  //     ]).start();
+  //   }
+  // }, [isFocused]);
 
-  console.log(changeBgColor);
+  // console.log(changeBgColor);
 
   //   useEffect(() => {
   //     setIsFocused(inputRef?.current.isFocused);
   //   }, [inputRef.current?.isFocused]);
 
-  console.log(isFocused);
+  // console.log(isFocused);
 
   return (
     <SafeAreaView style={{ flex: 100 }}>
@@ -89,7 +89,7 @@ const HomeDetails = ({ navigation }) => {
         style={{ flex: 40, alignItems: "center", justifyContent: "center" }}
       >
         <Image
-          style={{ width: 250, height: 250, marginTop: 20 }}
+          style={{ width: 200, height: 200, marginTop: 200 }}
           source={require("../../assets/rafiki-1.jpg")}
         />
       </View>
@@ -110,63 +110,64 @@ const HomeDetails = ({ navigation }) => {
         }}
       ></View> */}
 
-      <Animated.View
+      {/* <Animated.View
         style={{
           position: "absolute",
           transform: [{ translateY: moveInput }],
           backgroundColor: "red",
           zIndex: 999,
+        }} */}
+
+      <View
+        style={{
+          width: Dimensions.get("window").width,
+          paddingHorizontal: 16,
         }}
       >
-        <View
-          style={{
-            width: Dimensions.get("window").width,
-            paddingHorizontal: 16,
+        <GooglePlacesAutocomplete
+          ref={inputRef}
+          textInputProps={{
+            onBlur: () => setIsFocused(false),
+            onFocus: () => setIsFocused(true),
           }}
-        >
-          <GooglePlacesAutocomplete
-            ref={inputRef}
-            textInputProps={{
-              onBlur: () => setIsFocused(false),
-              onFocus: () => setIsFocused(true),
-            }}
-            styles={{
-              container: {
-                flex: 0,
-              },
-              textInput: {
-                fontSize: 18,
-                height: 80,
-                borderRadius: 35,
-                textAlign: "center",
-                //   width: 350,
-                borderWidth: StyleSheet.hairlineWidth,
-                borderColor: "gray",
-              },
-            }}
-            placeholder="Pick Up Location"
-            onPress={(data, details = null) => {
-              // 'details' is provided when fetchDetails = true
-              dispatch(
-                setOrigin({
-                  location: details.geometry.location,
-                  description: data.description,
-                })
-              );
-              dispatch(setDestination(null));
-            }}
-            fetchDetails={true}
-            returnKeyType={"search"}
-            enablePoweredByContainer={false}
-            minLength={2}
-            query={{
-              key: "AIzaSyCpOAReGS-lFwoHzbOE9qzqObYrvhb36D0",
-              language: "en",
-            }}
-            debounce={400}
-          />
-        </View>
-      </Animated.View>
+          styles={{
+            container: {
+              flex: 0,
+              marginBottom: 20,
+            },
+            textInput: {
+              fontSize: 18,
+              height: 80,
+              borderRadius: 35,
+              textAlign: "center",
+              //   width: 350,
+              borderWidth: StyleSheet.hairlineWidth,
+              borderColor: "gray",
+            },
+          }}
+          placeholder="Pick Up Location"
+          onPress={(data, details = null) => {
+            // 'details' is provided when fetchDetails = true
+            dispatch(
+              setOrigin({
+                location: details.geometry.location,
+                description: data.description,
+              })
+            );
+            dispatch(setDestination(null));
+          }}
+          fetchDetails={true}
+          returnKeyType={"search"}
+          enablePoweredByContainer={false}
+          minLength={2}
+          query={{
+            key: "AIzaSyCpOAReGS-lFwoHzbOE9qzqObYrvhb36D0",
+            language: "en",
+          }}
+          debounce={400}
+        />
+      </View>
+      {/* </Animated.View> */}
     </SafeAreaView>
   );
 };

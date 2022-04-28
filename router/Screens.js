@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { auth } from "../Components/firebase/firebase";
 import PackageConfirm from "../Components/Screens/PackageConfirm";
 import MapPriceScreen from "../Components/Screens/MapPriceScreen";
+import StatusPage from "../Components/Screens/StatusPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,7 @@ const Screens = () => {
           <Stack.Screen name="MapPriceScreen" component={MapPriceScreen} />
           <Stack.Screen name="TrackScreen" component={TrackScreen} />
           <Stack.Screen name="Confirm" component={PackageConfirm} />
+          <Stack.Screen name="StatusPage" component={StatusPage} />
         </Stack.Navigator>
       )}
     </NavigationContainer>

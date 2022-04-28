@@ -7,11 +7,14 @@ import {
 } from "react-native";
 import React from "react";
 import { useRoute } from "@react-navigation/native";
-import { useSelector } from "react-redux";
-import PayWithFlutterwave from "flutterwave-react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { PayWithFlutterwave } from "flutterwave-react-native";
 import { syncPackageData } from "../Redux/actions/userActions";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import tw from "tailwind-react-native-classnames";
 
 const PackageConfirm = () => {
   const [redirectData, setRedirectData] = useState(null);
@@ -21,6 +24,11 @@ const PackageConfirm = () => {
   const { origin, destination, userData } = useSelector(
     (state) => state.userReducers
   );
+
+  const { navigate, goBack } = useNavigation();
+
+  const dispatch = useDispatch();
+
   const {
     senderFullName,
     courier,
@@ -46,69 +54,95 @@ const PackageConfirm = () => {
   const handleOnRedirect = (data) => {
     setRedirectData(data);
     if (data.status === "successful") {
-      axios({
-        method: "get",
-        url: `https://api.flutterwave.com/v3/transactions/${data.transaction_id}/verify`,
-        headers: {
-          Authorization: "FLWPUBK_TEST-b4c8610ef2e104ed877166c2a55f51f5-X",
-        },
-      })
-        .then((res) => {
-          let data = res.data;
-          let packageData = {
-            senderFullName,
-            senderPhoneNumber,
-            recieverFullName,
-            recieverPhoneNumber,
-            itemContent,
-            price: courier?.price,
-            courierType: courier?.item?.title,
-            origin: origin?.description,
-            destination: destination?.description,
-          };
-          if (
-            data ===
-            "upstream connect error or disconnect/reset before headers. reset reason: connection failure"
-          ) {
-            setVerified(false);
-          }
-          if (data.status === "success") {
-            setVerifyData(packageData);
-            setVerified(true);
-          } else {
-            setVerified(false);
-          }
-        })
-        .catch((err) => {
-          setTimeout(() => {
-            setRetryVerify(true);
-          }, 3000);
-        });
-    }
-  };
-
-  //retry verify
-  useEffect(() => {
-    if (retryVerify) {
-      handleOnRedirect(redirectData);
-    }
-  }, [retryVerify]);
-
-  // Sync data to firebase
-  useEffect(() => {
-    if (verified) {
+      console.log("waxx============", data);
+      let packageData = {
+        senderFullName,
+        senderPhoneNumber,
+        recieverFullName,
+        recieverPhoneNumber,
+        itemContent,
+        price: courier?.PRICE,
+        courierType: courier?.item?.title,
+        origin: origin?.description,
+        destination: destination?.description,
+      };
       const dBdata = {
-        paymentData: verifyData,
-        transaction: transData,
+        paymentData: packageData,
+        transaction: data,
       };
       dispatch(syncPackageData(dBdata));
       navigate("TrackScreen");
     }
-  }, [verified]);
+  };
+
+  //     axios({
+  //       method: "get",
+  //       url: `https://api.flutterwave.com/v3/transactions/${data.transaction_id}/verify`,
+  //       headers: {
+  //         Authorization: "FLWPUBK_TEST-b4c8610ef2e104ed877166c2a55f51f5-X",
+  //       },
+  //     })
+  //       .then((res) => {
+  //         if (
+  //           data ===
+  //           "upstream connect error or disconnect/reset before headers. reset reason: connection failure"
+  //         ) {
+  //           setVerified(false);
+  //         }
+  //         if (data.status === "success") {
+  //           setVerifyData(packageData);
+  //           setVerified(true);
+  //         } else {
+  //           setVerified(false);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         setTimeout(() => {
+  //           setRetryVerify(true);
+  //         }, 3000);
+  //       });
+  //   }
+  // };
+
+  // retry verify
+  // useEffect(() => {
+  //   if (retryVerify) {
+  //     handleOnRedirect(redirectData);
+  //   }
+  // }, [retryVerify]);
+
+  // // Sync data to firebase
+  // useEffect(() => {
+  //   if (verified) {
+  //     const dBdata = {
+  //       paymentData: verifyData,
+  //       transaction: transData,
+  //     };
+  //     dispatch(syncPackageData(dBdata));
+  //     navigate("TrackScreen");
+  //   }
+  // }, [verified]);
 
   return (
     <ScrollView>
-      <View style={{ paddingHorizontal: 16 }}>
+      <TouchableOpacity
+        onPress={() => navigate("MapScreen")}
+        style={tw`absolute rounded-full shadow-lg left-5 z-40 p-3 bottom-35 bg-gray-100 mt-4`}
+      >
+        <Ionicons name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
+      <Text
+        style={{
+          marginLeft: 25,
+          marginTop: 90,
+          fontSize: 30,
+          marginBottom: 30,
+        }}
+      >
+        Confirm Package Details
+      </Text>
+
+      <View style={{ paddingHorizontal: 25 }}>
         <View
           style={{
             borderBottomColor: "gray",
@@ -189,7 +223,7 @@ const PackageConfirm = () => {
       </View>
 
       {/* reciever data  */}
-      <View style={{ paddingHorizontal: 16, marginVertical: 40 }}>
+      <View style={{ paddingHorizontal: 25, marginVertical: 40 }}>
         <View
           style={{
             borderBottomColor: "gray",
@@ -254,7 +288,7 @@ const PackageConfirm = () => {
         </View>
       </View>
 
-      <View style={{ alignItems: "center", marginTop: 40 }}>
+      <View style={{ alignItems: "center", marginTop: 10 }}>
         <PayWithFlutterwave
           onRedirect={(data) => handleOnRedirect(data)}
           options={paymentOptions}

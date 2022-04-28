@@ -137,6 +137,7 @@ const RegisterScreen = ({ navigation }) => {
         />
         <TextInput
           value={repeatPassword}
+          secureTextEntry
           onChangeText={(value) => setRepeatPassword(value)}
           style={{
             height: 60,

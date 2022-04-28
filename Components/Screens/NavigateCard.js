@@ -1,9 +1,17 @@
-import { StyleSheet, Text, View, SafeAreaView, inputRef } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  inputRef,
+  Image,
+} from "react-native";
 import React from "react";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { useDispatch, useSelector } from "react-redux";
 import { setDestination, setOrigin } from "../Redux/actions/userActions";
 import { useNavigation } from "@react-navigation/native";
+import { startGeofencingAsync } from "expo-location";
 
 const NavigateCard = () => {
   const dispatch = useDispatch();
@@ -17,11 +25,11 @@ const NavigateCard = () => {
         style={{
           textAlign: "center",
           marginTop: 25,
-          fontSize: 15,
+          fontSize: 25,
           fontWeight: "500",
         }}
       >
-        Tell us where your package destination
+        Package destination
       </Text>
       <View>
         <GooglePlacesAutocomplete
@@ -61,6 +69,16 @@ const NavigateCard = () => {
             language: "en",
           }}
           debounce={400}
+        />
+        <Image
+          style={{
+            width: 240,
+            height: 240,
+            alignItems: "center",
+            justifyItem: "center",
+            marginLeft: 80,
+          }}
+          source={require("../../assets/ridewith.png")}
         />
       </View>
     </SafeAreaView>

@@ -1,3 +1,5 @@
+import firebase from "firebase";
+
 export const setOrigin = (state) => {
   return {
     type: "SET_ORIGIN",
@@ -20,13 +22,11 @@ export const setTravelTimeInformation = (state) => {
   };
 };
 
-export const syncPackageData = ({}) => {
+export const syncPackageData = (data) => {
   return (dispatch, useState, { getFirebase, getFirestore }) => {
     const userId = getFirebase().auth().currentUser.uid;
     const db = getFirestore();
     const dbRef = db.collection("users").doc(userId);
-
-    let data = {};
 
     dbRef
       .update({
